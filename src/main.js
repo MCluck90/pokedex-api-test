@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const Pokedex = require('pokedex-promise-v2');
 const express = require('express');
 const cors = require('cors');
@@ -24,7 +25,7 @@ app.get('/api/v2/pokemon/:nameOrId', async (req, res) => {
   }
 });
 
-app.post('/api/v2/pokemon/:nameOrId', async (req, res) => {
+app.post('/api/v2/pokemon/:nameOrId', bodyParser.json(), async (req, res) => {
   try {
     const response = await P.getPokemonByName(req.params.nameOrId);
     const local = updatedPokemon[response.id] || {};
