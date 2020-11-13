@@ -6,6 +6,8 @@ const app = express();
 const port = 7890;
 var P = new Pokedex();
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 app.use(
   cors({
     origin: '*',
@@ -27,6 +29,8 @@ app.get('/api/v2/pokemon/:nameOrId', async (req, res) => {
 
 app.post('/api/v2/pokemon/:nameOrId', bodyParser.json(), async (req, res) => {
   try {
+    // Make the response take longer to simulate hard work
+    await sleep(200);
     const response = await P.getPokemonByName(req.params.nameOrId);
     const local = updatedPokemon[response.id] || {};
     const newState = {
